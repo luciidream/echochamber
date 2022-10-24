@@ -127,8 +127,8 @@ def plotting(results, params):
     str2 = 'alpha1=' + str(params['alpha1'])
     str3 = 'alpha2=' + str(params['alpha2'])
     str4 = 'N=' + str(params['N'])
-    str5 = 'p1=' + str(params['p1'])
-    str6 = 'p2=' + str(params['p2'])
+    str5 = 'p1=' + str(params['k1'])
+    str6 = 'p2=' + str(params['k2'])
 
     plt.legend([str1, str2, str3, str4, str5, str6])
     plt.show()

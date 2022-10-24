@@ -14,7 +14,7 @@ if __name__ == '__main__':
     # results = pool.map(coer.one_sim_er, iter_rounds)
     # np.save('er_heatmap.npy', results)
     # SC one time
-    results = pool.map(cosc.run_one_sc, iter_rounds)
+    results = pool.map(cosc.one_sim_sc, iter_rounds)
     np.save('one_sc.npy', results)
     # SC heatmap
     # results = pool.map(cosc.carry_out_sc, iter_rounds)
