@@ -9,20 +9,20 @@ k1_arr = np.linspace(30, 140, 12)
 k2_arr = np.linspace(1, 12, 12)
 alpha_arr = np.linspace(0, 4, 11)
 params = {'T': 5., 'N': 180, 'dt': 0.01, 'beta': 1, 'alpha1': 3, 'alpha2': 3,
-          'a_val1': 0.1, 'a_val2': 0.05, 'k1': 100, 'k2': 25, 'mark': 'c'}
+          'a_val1': 0.1, 'a_val2': 0.05, 'k1': 130, 'k2': 25, 'mark': 'c'}
 params['x0'] = np.linspace(-1, 1, params['N'])
+p1, p2 = scg.get_p1_and_p2(params['k1'], params['k2'], params['N'])
+G, node_neighbors_dict, node_triangles_dict, triangles_list = scg.generate_sc(params['N'], p1, p2)
+centrality_dict = pm2.calculate_centrality(G, params['mark'])
+params['centrality1'] = []
+for val in centrality_dict.values():
+    params['centrality1'].append(val)
+params['centrality2'] = hop.calculate_triangle_centrality(triangles_list, params['centrality1'])
 
 
-def run_one_sc(params):
+def run_one_sc(params, G, triangles_list):
     sigma_mark = ['1', '2', '3']
-    p1, p2 = scg.get_p1_and_p2(params['k1'], params['k2'], params['N'])
-    G, node_neighbors_dict, node_triangles_dict, triangles_list = scg.generate_sc(params['N'], p1, p2)
     x0 = params['x0']
-    centrality_dict = pm2.calculate_centrality(G, params['mark'])
-    params['centrality1'] = []
-    for val in centrality_dict.values():
-        params['centrality1'].append(val)
-    params['centrality2'] = hop.calculate_triangle_centrality(triangles_list, params['centrality1'])
     result1 = hop.simulating_models_with_sc(params, G, x0, triangles_list, sigma_mark[0])
     result2 = hop.simulating_models_with_sc(params, G, x0, triangles_list, sigma_mark[1])
     result3 = hop.simulating_models_with_sc(params, G, x0, triangles_list, sigma_mark[2])
@@ -54,7 +54,7 @@ def one_heatmap_sc(it):
 def one_sim_sc(it):
     print("IT ROUND %i" % it)
 
-    results = run_one_sc(params)
+    results = run_one_sc(params, G, triangles_list)
     return results
 
 

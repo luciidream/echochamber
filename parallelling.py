@@ -10,6 +10,7 @@ if __name__ == '__main__':
     iter_rounds = range(0, n_simulations)
     pool = Pool(n_processes)
 
+
     # ER
     # results = pool.map(coer.one_sim_er, iter_rounds)
     # np.save('er_heatmap.npy', results)
@@ -19,3 +20,4 @@ if __name__ == '__main__':
     # SC heatmap
     # results = pool.map(cosc.carry_out_sc, iter_rounds)
     # np.save('sc_heatmap.npy', results)
+    pool.close()

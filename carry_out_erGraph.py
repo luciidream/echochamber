@@ -1,5 +1,6 @@
 import modeling_erGraph as md
 import numpy as np
+import networkx as nx
 # import matplotlib.pyplot as plt
 # import seaborn as sns
 
@@ -34,20 +35,31 @@ import numpy as np
 #     plt.xlabel("Alpha", fontsize=12)
 #     plt.show()
 
-prob_arr = np.linspace(1, 0.01, 81)
-alpha_arr = np.linspace(0, 4, 81)
+prob_arr = np.linspace(1, 0.01, 5)
+alpha_arr = np.linspace(0, 4, 5)
 params = {'T': 2., 'N': 500, 'dt': 0.01, 'beta': 0.5, 'K': 1, 'a_val': 0.1}
+G_list = []
+for pro in prob_arr:
+    G = nx.fast_gnp_random_graph(params['N'], pro)
+    while not (nx.is_connected(G)):
+        G = nx.fast_gnp_random_graph(params['N'], pro)
+    G_list.append(G)
+# x0_list = []
+# for pro in prob_arr:
+#     temp = np.linspace(-1, 1, params['N'])
+#     x0_list.append(temp)
+x0 = np.linspace(-1, 1, params['N'])
 
 
-def carry_out_er(prob_arr, alpha_arr, params):
+def carry_out_er(prob_arr, alpha_arr, G_list, x0, params):
     abs_first = np.zeros((len(alpha_arr), len(prob_arr)))
     ave_first = np.zeros((len(alpha_arr), len(prob_arr)))
     for i in range(0, len(prob_arr)):
         for j in range(0, len(alpha_arr)):
             abs_first[i, j] = \
-                md.calculate_final_x(md.models(params, alpha_arr[j], prob_arr[i], 'c'), params)
+                md.calculate_final_x(md.models(params, alpha_arr[j], prob_arr[i], 'c', G_list[i], x0), params)
             ave_first[i, j] = \
-                md.calculate_final_x2(md.models(params, alpha_arr[j], prob_arr[i], 'c'), params)
+                md.calculate_final_x2(md.models(params, alpha_arr[j], prob_arr[i], 'c', G_list[i], x0), params)
     results = [abs_first, ave_first]
     return results
 
@@ -55,5 +67,5 @@ def carry_out_er(prob_arr, alpha_arr, params):
 def one_sim_er(it):
     print("IT ROUND %i" % it)
 
-    results = carry_out_er(prob_arr, alpha_arr, params)
+    results = carry_out_er(prob_arr, alpha_arr, G_list, x0, params)
     return results

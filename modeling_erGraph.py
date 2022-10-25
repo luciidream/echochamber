@@ -5,12 +5,15 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-def models(params, alpha, prob, mark):
+def models(params, alpha, prob, mark, graph=None, x_0=None):
     params['alpha'] = alpha
     # -------------------------------ER RANDOM GRAPH------------------------------- #
-    G = nx.fast_gnp_random_graph(params['N'], prob)
-    while not(nx.is_connected(G)):
+    if graph is None:
         G = nx.fast_gnp_random_graph(params['N'], prob)
+        while not(nx.is_connected(G)):
+            G = nx.fast_gnp_random_graph(params['N'], prob)
+    else:
+        G = graph
     # -------------------------------ER RANDOM GRAPH------------------------------- #
     # ----------------------------BARABASI ALBERT GRAPH---------------------------- #
     # new_edges = int(prob * params['N'])
@@ -20,7 +23,10 @@ def models(params, alpha, prob, mark):
     # ----------------------------BARABASI ALBERT GRAPH---------------------------- #
     largest_cc = max(nx.connected_components(G), key=len)
     lcc = np.array(list(largest_cc))
-    x0 = np.linspace(-1, 1, params['N'])
+    if x_0 is None:
+        x0 = np.linspace(-1, 1, params['N'])
+    else:
+        x0 = x_0
     centrality_dict = pm2.calculate_centrality(G, mark)
 
     params['centrality'] = []
