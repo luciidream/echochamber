@@ -3,13 +3,15 @@ import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
 import seaborn as sns
-import other_plots as op
+# import other_plots as op
 
 if __name__ == '__main__':
-    nodes = 200
+    nodes = 500
+    delta = 0.3
+
     mark = 'c'
     # -------------------------------ER RANDOM GRAPH------------------------------- #
-    average_degree = 0.95
+    average_degree = 1
     G = nx.fast_gnp_random_graph(nodes, average_degree)
     while not(nx.is_connected(G)):
         G = nx.fast_gnp_random_graph(nodes, average_degree)
@@ -24,8 +26,10 @@ if __name__ == '__main__':
     largest_cc = max(nx.connected_components(G), key=len)
     lcc = np.array(list(largest_cc))
     largest_connected_subgraph = nx.subgraph(G, largest_cc)
-    params = {'T': 3., 'N': len(largest_cc), 'dt': 0.01, 'beta': 1, 'K': 1, 'alpha': 3, 'a_val': 0.1}
+    params = {'T': 10., 'N': len(largest_cc), 'dt': 0.01, 'beta': 1, 'K': 1, 'alpha': 3, 'a_val': 0.1}
+    # x0 = np.linspace(-1 - delta, 1 - delta, params['N'])
     x0 = np.linspace(-1, 1, params['N'])
+    np.random.shuffle(x0)
     centrality_dict = pm2.calculate_centrality(largest_connected_subgraph, mark)
     params['centrality'] = []
     for val in centrality_dict.values():
@@ -61,5 +65,5 @@ if __name__ == '__main__':
     plt.legend([str1, str2, str3, str4])
     plt.show()
 
-    op.colored_network(G, np.array(x_t[:, int(params['T'] / params['dt'])]))
+    # op.colored_network(G, np.array(x_t[:, int(params['T'] / params['dt'])]))
 

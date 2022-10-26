@@ -24,11 +24,13 @@ if __name__ == '__main__':
     result2 = get_dict(data_collection, 1, 8)
     result3 = get_dict(data_collection, 2, 8)
     result4 = {'t_arr': result1['t_arr'], 'x_t': result1['x_t'] - result3['x_t']}
+    result5 = {'t_arr': result1['t_arr'], 'x_t': result3['x_t'] - result1['x_t']}
 
     hop.plotting(result1, params)
     hop.plotting(result2, params)
     hop.plotting(result3, params)
     hop.plotting(result4, params)
+    hop.plotting(result5, params)
 
 
 

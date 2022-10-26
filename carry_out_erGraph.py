@@ -56,10 +56,11 @@ def carry_out_er(prob_arr, alpha_arr, G_list, x0, params):
     ave_first = np.zeros((len(alpha_arr), len(prob_arr)))
     for i in range(0, len(prob_arr)):
         for j in range(0, len(alpha_arr)):
+            res = md.models(params, alpha_arr[j], prob_arr[i], 'c', G_list[i], x0)
             abs_first[i, j] = \
-                md.calculate_final_x(md.models(params, alpha_arr[j], prob_arr[i], 'c', G_list[i], x0), params)
+                md.calculate_final_x(res, params)
             ave_first[i, j] = \
-                md.calculate_final_x2(md.models(params, alpha_arr[j], prob_arr[i], 'c', G_list[i], x0), params)
+                md.calculate_final_x2(res, params)
     results = [abs_first, ave_first]
     return results
 
