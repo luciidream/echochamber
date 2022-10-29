@@ -20,17 +20,17 @@ def get_dict(data_co, ind, rounds):
 if __name__ == '__main__':
     data_collection = np.load('one_sc.npy', allow_pickle=True)
     params = cosc.params
-    result1 = get_dict(data_collection, 0, 8)
-    result2 = get_dict(data_collection, 1, 8)
-    result3 = get_dict(data_collection, 2, 8)
+    result1 = get_dict(data_collection, 0, 10)
+    result2 = get_dict(data_collection, 1, 10)
+    result3 = get_dict(data_collection, 2, 10)
     result4 = {'t_arr': result1['t_arr'], 'x_t': result1['x_t'] - result3['x_t']}
     result5 = {'t_arr': result1['t_arr'], 'x_t': result3['x_t'] - result1['x_t']}
 
-    hop.plotting(result1, params)
-    hop.plotting(result2, params)
-    hop.plotting(result3, params)
-    hop.plotting(result4, params)
-    hop.plotting(result5, params)
+    # hop.plotting(result1, params, '1')
+    # hop.plotting(result2, params, '2')
+    # hop.plotting(result3, params, '3')
+    # hop.plotting(result4, params, '4')
+    hop.plotting(result5, params, '5')
 
 
 

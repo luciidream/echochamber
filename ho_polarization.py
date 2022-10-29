@@ -108,7 +108,7 @@ def simulating_models_with_sc(params, G, x0, triangles_list, mark):
     return results
 
 
-def plotting(results, params):
+def plotting(results, params, mark=None):
 
     x_t = results['x_t']
     t_arr = results['t_arr']
@@ -118,19 +118,28 @@ def plotting(results, params):
     con_x[con_x > 0] = np.NaN
 
     sns.set_theme()
-    plt.figure()
-    plt.plot(t_arr, pro_x.T, color='blue', lw=0.5)
-    plt.plot(t_arr, con_x.T, color='red', lw=0.5)
-    plt.xlabel("Time")
-    plt.ylabel("Opinions xi(t)")
-    str1 = 'beta=' + str(params['beta'])
-    str2 = 'alpha1=' + str(params['alpha1'])
-    str3 = 'alpha2=' + str(params['alpha2'])
-    str4 = 'N=' + str(params['N'])
-    str5 = 'p1=' + str(params['k1'])
-    str6 = 'p2=' + str(params['k2'])
-
-    plt.legend([str1, str2, str3, str4, str5, str6])
+    plt.figure(dpi=400, figsize=(16, 12))
+    plt.plot(t_arr, pro_x.T, color='#20afdf', lw=0.2)
+    plt.plot(t_arr, con_x.T, color='#ff80b3', lw=0.2)
+    plt.xticks(fontsize=15)
+    plt.yticks(fontsize=15)
+    plt.xlabel(" $t$ ", fontsize=20)
+    plt.ylabel(" $x_{i}(t)$ ", fontsize=20)
+    title_str = 'ER Random Graph ' + ' ' + '$N$' + '=' + str(params['N']) + ' ' + \
+                r'$\alpha $' + '=' + str(params['alpha1']) + ' ' + '$k_{1}$' + '=' + \
+                str(params['k1']) + ' ' + '$k_{2}$' + '=' + str(params['k2'])
+    if mark is not None:
+        if mark == '1':
+            title_str = 'Pairwise Only ' + title_str
+        if mark == '2':
+            title_str = '2-Simplex Only ' + title_str
+        if mark == '3':
+            title_str = 'Both Effect ' + title_str
+        if mark == '5':
+            title_str = 'Extract 2-Simplex Effect ' + title_str
+        if mark == '4':
+            title_str = 'Deprive 2-Simplex Effect ' + title_str
+    plt.title(title_str, fontsize=20)
     plt.show()
 
 

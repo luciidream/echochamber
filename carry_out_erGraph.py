@@ -35,8 +35,8 @@ import networkx as nx
 #     plt.xlabel("Alpha", fontsize=12)
 #     plt.show()
 
-prob_arr = np.linspace(1, 0.01, 5)
-alpha_arr = np.linspace(0, 4, 5)
+prob_arr = np.linspace(1, 0.01, 51)
+alpha_arr = np.linspace(0, 4, 51)
 params = {'T': 2., 'N': 500, 'dt': 0.01, 'beta': 0.5, 'K': 1, 'a_val': 0.1}
 G_list = []
 for pro in prob_arr:
