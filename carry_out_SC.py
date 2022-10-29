@@ -49,7 +49,7 @@ def carry_out_sc(k1_arr, k2_arr, alpha_arr, params, G_list, triangle_lists, x0):
         for j in range(0, len(k2_arr)):
             for k in range(0, len(alpha_arr)):
                 temp = md2.models_sc(params, k1_arr[i], k2_arr[j], alpha_arr[k], alpha_arr[k], params['mark'],
-                                     G_list[i][j], triangle_lists[i][j], x0)
+                                     '3', G_list[i][j], triangle_lists[i][j], x0)
 
                 abs_first_cube[(i, j, k)] = md1.calculate_final_x(temp, params)
                 ave_first_cube[(i, j, k)] = md1.calculate_final_x2(temp, params)

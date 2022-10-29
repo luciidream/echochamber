@@ -7,7 +7,7 @@ import ho_polarization as hop
 def models_sc(params, k1, k2, alpha1, alpha2, mark, sigma_mark, graph=None, triangle_list=None, x_0=None):
     params['p1'], params['p2'] = scg.get_p1_and_p2(k1, k2, params['N'])
     params['alpha1'], params['alpha2'] = alpha1, alpha2
-    if graph is None:
+    if (graph is None) and (triangle_list is None):
         G, node_neighbors_dict, node_triangles_dict, triangles_list = \
             scg.generate_sc(params['N'], params['p1'], params['p2'])
     else:

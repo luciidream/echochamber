@@ -9,7 +9,7 @@ if __name__ == '__main__':
 
     N = 150
     k1_arr = np.linspace(30, 140, 12)
-    k2_arr = np.linspace(1, 12, 12)
+    k2_arr = np.linspace(2, 12, 6)
     alpha_arr = np.linspace(0, 4, 11)
     mark = 'c'
     sigma_mark = '3'
@@ -26,7 +26,7 @@ if __name__ == '__main__':
                 rounds += 1
                 res_cube[(i, j, k)] = \
                     md1.calculate_final_x(md2.models_sc(params, k1_arr[i], k2_arr[j],
-                                                        alpha_arr[k], alpha_arr[k], mark), params)
+                                                        alpha_arr[k], alpha_arr[k], mark, sigma_mark='3'), params)
                 print(rounds, res_cube[(i, j, k)])
 
     np.save('res_cube.npy', res_cube)
